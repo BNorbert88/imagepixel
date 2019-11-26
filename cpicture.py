@@ -1,10 +1,21 @@
 from PIL import Image
 from numpy import asarray
 import random
-
+import requests
 
 class CPicture:
     imageData = 'images/'
+
+    def randomPicture(self):
+        response = requests.get("https://picsum.photos/200/300.jpg")
+        name = response.url[25:-12]
+
+        f = open(self.imageData + 'picsum/' + name + '.jpg', 'wb')
+        f.write(response.content)
+        f.close()
+
+        # response = requests.get("https://source.unsplash.com/random")
+
 
     def listsToString(self, lista):
         strr = ''
@@ -15,7 +26,6 @@ class CPicture:
 
     def print33ToFile(self, image, target):
         i = Image.open(image)
-        # i = Image.open(image)
         data = asarray(i)
         size = i.size
         pos = [random.randint(0, size[1] - 3), random.randint(0, size[0] - 3)]
