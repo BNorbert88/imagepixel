@@ -7,11 +7,11 @@ c = CPicture()
 # Calculate RGB values from the folder kitti
 ############################################################################
 
-testdir = '/mnt/data/PycharmProjects/imagepixel/images/kitti/'
-
-for file in os.listdir(os.fsencode(testdir)):
-    filename = os.fsdecode(file)
-    c.print33ToFile(testdir + filename, 'test_kitti.txt')
+# testdir = '/mnt/data/PycharmProjects/imagepixel/images/kitti/'
+#
+# for file in os.listdir(os.fsencode(testdir)):
+#     filename = os.fsdecode(file)
+#     c.print33ToFile(testdir + filename, 'test_kitti.txt')
 
 
 ############################################################################
@@ -22,8 +22,16 @@ for file in os.listdir(os.fsencode(testdir)):
 #     print(i)
 #     c.randomPicture()
 
-testdir = '/mnt/data/PycharmProjects/imagepixel/images/picsum/'
+# testdir = '/mnt/data/PycharmProjects/imagepixel/images/picsum/'
+#
+# for file in os.listdir(os.fsencode(testdir)):
+#     filename = os.fsdecode(file)
+#     c.print33ToFile(testdir + filename, 'test_picsum.txt')
 
-for file in os.listdir(os.fsencode(testdir)):
-    filename = os.fsdecode(file)
-    c.print33ToFile(testdir + filename, 'test_picsum.txt')
+
+
+############################################################################
+# Acces to an open API
+############################################################################
+
+c.saveTrafficCam([1, 2, 3])
