@@ -1,11 +1,14 @@
+import json
+import os
+import os.path
+import random
+import threading
+from datetime import datetime
+
+import requests
 from PIL import Image
 from numpy import asarray
-import random
-import requests
-import json
-from datetime import datetime
-import threading
-import os, os.path
+
 
 class CPicture:
     imageData = 'images/'
@@ -14,14 +17,23 @@ class CPicture:
         response = requests.get('https://api.transport.nsw.gov.au/v1/live/cameras',
                                 headers={'Authorization': 'apikey SgdO57pmM7byDpbENqVkscYwdiF0G0GSsFwA'})
         tomb = json.loads(response.content)['features']
-        # for t in tomb:
-        cim = tomb[n]['properties']['href']
-        # print(cim)
+        for t in tomb[:n]:
+            cam_id = t['id']
+            print(cam_id)
+            url = t['properties']['href']
+            response2 = requests.get(url)
+            if response2.status_code == 200:
+                folder_name = self.imageData + "opentraffic/" + cam_id
+                if not os.path.isdir(folder_name):
+                    os.mkdir(folder_name)
 
-        response2 = requests.get(cim)
-        if response2.status_code == 200:
-            with open(self.imageData + "opentraffic/" + str(n) + '-' + datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f") + ".jpg", 'wb') as f:
-                f.write(response2.content)
+                with open(folder_name + '/' + cam_id + '-'
+                          + datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f") + ".jpg", 'wb') as f:
+                    f.write(response2.content)
+
+            with open(self.imageData + "opentraffic/adatok.txt", 'at') as f:
+                f.write(json.dumps(t) + "\n")
+        print("-------")
 
     def saveTrafficCam(self, lista):
         # DIR = self.imageData + 'opentraffic'
@@ -40,7 +52,6 @@ class CPicture:
 
         # response = requests.get("https://source.unsplash.com/random")
 
-
     def listsToString(self, lista):
         strr = ''
         for l in lista:
@@ -53,10 +64,10 @@ class CPicture:
         data = asarray(i)
         size = i.size
         pos = [random.randint(0, size[1] - 3), random.randint(0, size[0] - 3)]
-        with open(self.imageData+target, 'a') as out3:
+        with open(self.imageData + target, 'a') as out3:
             L = []
             for i in range(3):
                 for j in range(3):
                     pixel = data[pos[0] + i, pos[1] + j].tolist()
                     L.append(pixel)
-            out3.write(image+','+self.listsToString(L)+'\n')
+            out3.write(image + ',' + self.listsToString(L) + '\n')

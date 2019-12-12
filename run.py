@@ -29,9 +29,8 @@ c = CPicture()
 #     c.print33ToFile(testdir + filename, 'test_picsum.txt')
 
 
-
 ############################################################################
 # Acces to an open API
 ############################################################################
 
-c.saveTrafficCam([1, 2, 3, 4, 5, 6])
+c.saveTrafficCam([3])
