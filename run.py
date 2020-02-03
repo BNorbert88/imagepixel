@@ -33,4 +33,4 @@ c = CPicture()
 # Acces to an open API
 ############################################################################
 
-c.saveTrafficCam([3])
+c.save_all_traffic_cam()
